@@ -83,12 +83,13 @@ onMounted(() => {
               </div>
               <ul class="py-1" role="none">
                 <li>
-                  <a
+                  <RouterLink
+                    to="/rbac"
                     href="#"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
-                    >Roles and Permissions</a
-                  >
+                    >Roles and Permissions
+                  </RouterLink>
                 </li>
                 <li>
                   <a
@@ -115,7 +116,7 @@ onMounted(() => {
       <ul class="space-y-2 font-medium">
         <li>
           <RouterLink
-            href="#"
+            to="/"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <svg
@@ -137,7 +138,7 @@ onMounted(() => {
         </li>
         <li>
           <RouterLink
-            href="#"
+            to="/users"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <svg
@@ -156,7 +157,7 @@ onMounted(() => {
         </li>
         <li>
           <RouterLink
-            href="#"
+            to="/events"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <i class="pi pi-calendar-minus"></i>
@@ -164,13 +165,13 @@ onMounted(() => {
           </RouterLink>
         </li>
         <li>
-          <a
-            href="#"
+          <RouterLink
+            to="/projects"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <i class="pi pi-briefcase"></i>
             <span class="flex-1 ms-3 whitespace-nowrap">Projects</span>
-          </a>
+          </RouterLink>
         </li>
         <li>
           <a
