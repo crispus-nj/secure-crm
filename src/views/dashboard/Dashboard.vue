@@ -1,0 +1,224 @@
+<script setup lang="ts">
+import Card from '@/shared/ui/Card.vue'
+</script>
+
+<template>
+  <!-- lg:flex lg:space-x-6 -->
+  <div class="grid lg:grid-cols-[3fr_1fr] lg:gap-4 gap-8">
+    <div class="shadow-xl rounded-lg flex-grow">
+      <p class="flex justify-between items-center px-10">
+        <span class="font-medium text-lg">Users</span>
+        <span class="text-[#3F8CFF] cursor-pointer hover:underline"
+          >View All</span
+        >
+      </p>
+      <div class="grid md:grid-cols-3 md:gap-6 gap-8 lg:gap-4 p-10">
+        <Card
+          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
+        >
+          <!-- Profile logo -->
+          <div class="">
+            <img src="" alt="profile" class="w-20 rounded-full" />
+          </div>
+          <!-- name -->
+          <p class="font-semibold text-sm text-center">
+            Crispus Njenga Muthiora
+          </p>
+          <!-- title -->
+          <p class="font-regular text-sm text-center">Software Developer</p>
+          <!-- level -->
+          <button
+            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+          >
+            Middle
+          </button>
+        </Card>
+        <Card
+          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
+        >
+          <!-- Profile logo -->
+          <div class="">
+            <img src="" alt="profile" class="w-20 rounded-full" />
+          </div>
+          <!-- name -->
+          <p class="font-semibold text-sm text-center">
+            Crispus Njenga Muthiora
+          </p>
+          <!-- title -->
+          <p class="font-regular text-sm text-center">Software Developer</p>
+          <!-- level -->
+          <button
+            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+          >
+            Middle
+          </button>
+        </Card>
+
+        <Card
+          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
+        >
+          <!-- Profile logo -->
+          <div class="">
+            <img src="" alt="profile" class="w-20 rounded-full" />
+          </div>
+          <!-- name -->
+          <p class="font-semibold text-sm text-center">
+            Crispus Njenga Muthiora
+          </p>
+          <!-- title -->
+          <p class="font-regular text-sm text-center">Software Developer</p>
+          <!-- level -->
+          <button
+            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+          >
+            Middle
+          </button>
+        </Card>
+
+        <Card
+          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
+        >
+          <!-- Profile logo -->
+          <div class="">
+            <img src="" alt="profile" class="w-20 rounded-full" />
+          </div>
+          <!-- name -->
+          <p class="font-semibold text-sm text-center">
+            Crispus Njenga Muthiora
+          </p>
+          <!-- title -->
+          <p class="font-regular text-sm text-center">Software Developer</p>
+          <!-- level -->
+          <button
+            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+          >
+            Middle
+          </button>
+        </Card>
+
+        <Card
+          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
+        >
+          <!-- Profile logo -->
+          <div class="">
+            <img src="" alt="profile" class="w-20 rounded-full" />
+          </div>
+          <!-- name -->
+          <p class="font-semibold text-sm text-center">
+            Crispus Njenga Muthiora
+          </p>
+          <!-- title -->
+          <p class="font-regular text-sm text-center">Software Developer</p>
+          <!-- level -->
+          <button
+            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+          >
+            Middle
+          </button>
+        </Card>
+
+        <Card
+          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
+        >
+          <!-- Profile logo -->
+          <div class="">
+            <img src="" alt="profile" class="w-20 rounded-full" />
+          </div>
+          <!-- name -->
+          <p class="font-semibold text-sm text-center">
+            Crispus Njenga Muthiora
+          </p>
+          <!-- title -->
+          <p class="font-regular text-sm text-center">Software Developer</p>
+          <!-- level -->
+          <button
+            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+          >
+            Middle
+          </button>
+        </Card>
+      </div>
+    </div>
+    <div class="bg-white shadow-lg rounded-lg p-4 max-w-sm mx-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Nearest Events</h2>
+        <a href="#" class="text-blue-500 hover:underline">View all</a>
+      </div>
+
+      <!-- Event Item 1 -->
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-1 bg-blue-500 h-full rounded"></div>
+        <div class="flex-1">
+          <h3 class="font-semibold">Presentation of the new department</h3>
+          <p class="text-gray-500 text-sm">Today | 5:00 PM</p>
+        </div>
+        <div class="flex items-center gap-1 text-gray-500">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <!-- Clock Icon -->
+            <path
+              d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.414V7a1 1 0 0 0-2 0v5.586l4.707 4.707a1 1 0 1 0 1.414-1.414z"
+            ></path>
+          </svg>
+          <span class="text-sm">4h</span>
+          <svg
+            class="h-4 w-4 text-yellow-500"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <!-- Up Arrow Icon -->
+            <path d="M12 4l6 6h-5v10h-2V10H6l6-6z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Event Item 2 -->
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-1 bg-pink-500 h-full rounded"></div>
+        <div class="flex-1">
+          <h3 class="font-semibold">Anna's Birthday</h3>
+          <p class="text-gray-500 text-sm">Today | 6:00 PM</p>
+        </div>
+        <div class="flex items-center gap-1 text-gray-500">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.414V7a1 1 0 0 0-2 0v5.586l4.707 4.707a1 1 0 1 0 1.414-1.414z"
+            ></path>
+          </svg>
+          <span class="text-sm">4h</span>
+          <svg
+            class="h-4 w-4 text-green-500"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <!-- Down Arrow Icon -->
+            <path d="M12 20l-6-6h5V4h2v10h5l-6 6z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Event Item 3 -->
+      <div class="flex items-center gap-4">
+        <div class="w-1 bg-purple-500 h-full rounded"></div>
+        <div class="flex-1">
+          <h3 class="font-semibold">Ray’s Birthday</h3>
+          <p class="text-gray-500 text-sm">Tomorrow | 2:00 PM</p>
+        </div>
+        <div class="flex items-center gap-1 text-gray-500">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.414V7a1 1 0 0 0-2 0v5.586l4.707 4.707a1 1 0 1 0 1.414-1.414z"
+            ></path>
+          </svg>
+          <span class="text-sm">4h</span>
+          <svg
+            class="h-4 w-4 text-green-500"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 20l-6-6h5V4h2v10h5l-6 6z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
