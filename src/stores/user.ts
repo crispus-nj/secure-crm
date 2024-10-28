@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { IUser } from '@/models/user.interface'
+import api from '@/services/http'
 
-// Create a function to get the user from sessionStorage
 function getUserFromSession(): IUser | null {
   const userData = sessionStorage.getItem('user')
   return userData ? JSON.parse(userData) : null
@@ -13,15 +13,14 @@ export const userStore = defineStore('user', {
     user: getUserFromSession() || null,
   }),
   actions: {
-    login(data: IUser) {
-      // Assign the user data to the state
-      this.user = data ?? null
-      if (this.user) {
-        // Ensure the token is correctly set
-        this.user.token = 'etetahauywuyuqywquyuqyuq'
+    async login(data: unknown | null) {
+      try {
+        const response = await api.post('/auth/login', data)
+        this.user = response.data.Payload
         sessionStorage.setItem('user', JSON.stringify(this.user))
+      } catch (error: unknown) {
+        console.log(error)
       }
-      console.log('User logged in:', this.user) // Debugging line
     },
     logOut() {
       this.user = null

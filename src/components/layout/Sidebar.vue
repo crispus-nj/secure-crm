@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
-import { RouterView } from 'vue-router'
-import { RouterLink } from 'vue-router'
+import { RouterView, RouterLink } from 'vue-router'
+import { userStore } from '@/stores/user'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const store = userStore()
+
+const logout = () => {
+  store.logOut()
+  router.push({ name: 'Login' })
+}
 
 onMounted(() => {
   initFlowbite()
@@ -92,12 +101,13 @@ onMounted(() => {
                   </RouterLink>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  <div
+                    @click="logout"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
-                    >Sign out</a
                   >
+                    Sign out
+                  </div>
                 </li>
               </ul>
             </div>
@@ -174,13 +184,15 @@ onMounted(() => {
           </RouterLink>
         </li>
         <li>
-          <a
-            href="#"
+          <div
+            @click="logout"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <i class="pi pi-sign-out"></i>
-            <span class="flex-1 ms-3 whitespace-nowrap">Log Out</span>
-          </a>
+            <span class="flex-1 ms-3 whitespace-nowrap cursor-pointer"
+              >Log Out</span
+            >
+          </div>
         </li>
       </ul>
     </div>

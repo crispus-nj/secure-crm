@@ -1,9 +1,4 @@
-import {
-  createRouter,
-  createWebHistory,
-  type NavigationGuardNext,
-  type RouteLocationNormalized,
-} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import BaseLayoutView from '@/components/layout/BaseLayout.vue'
 import { userStore } from '@/stores/user'
 
