@@ -16,13 +16,24 @@ export const userStore = defineStore('user', {
     login(data: IUser) {
       // Assign the user data to the state
       this.user = data ?? null
-      this.user.token = 'etetahauywuyuqywquyuqyuq'
-      console.log(this.user)
-      sessionStorage.setItem('user', JSON.stringify(this.user))
+      if (this.user) {
+        // Ensure the token is correctly set
+        this.user.token = 'etetahauywuyuqywquyuqyuq'
+        sessionStorage.setItem('user', JSON.stringify(this.user))
+      }
+      console.log('User logged in:', this.user) // Debugging line
     },
     logOut() {
       this.user = null
       sessionStorage.removeItem('user')
     },
+  },
+  getters: {
+    isAuthenticated: state => {
+      console.log('Checking authentication:', state.user) // Debugging line
+      return state.user && !!state.user.token // Adjusted to check user and token
+    },
+    getUser: state => state.user,
+    userRole: state => state.user?.role || null,
   },
 })

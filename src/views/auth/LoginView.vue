@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { userStore } from '@/stores/user'
 
 const store = userStore()
-// console.log('User data after reload:', store.$state.user)
+console.log('User data after reload:', store.$state.user)
 const userInfor = ref({
   email: '',
   password: '',
