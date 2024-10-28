@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { userStore } from '@/stores/user'
 
-const store = userStore()
-// console.log('User data after reload:', store.$state.user)
 const userInfor = ref({
   email: '',
   password: '',
@@ -11,7 +8,8 @@ const userInfor = ref({
 
 function submit() {
   // Form submission logic
-  store.login({ ...userInfor.value })
+  console.log(userInfor.value.email)
+  console.log(userInfor.value.password)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,9 +28,33 @@ function handleInputChange(event: Event) {
       <div class="bg-[#6f68d1] p-4 rounded-md">
         <h2 class="text-xl mb-3 font-medium text-center">Welcome to CRM</h2>
         <p class="text-sm mb-3 font-medium text-center">
-          Please sign in to your account
+          Please create your account
         </p>
         <form @submit.prevent="submit">
+          <div class="flex flex-col w-full gap-1 mb-3">
+            <label for="email">Name</label>
+            <input
+              v-model="userInfor.name"
+              class="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
+              type="text"
+              name="name"
+              placeholder="Type Name"
+              id="name"
+              required
+            />
+          </div>
+          <div class="flex flex-col w-full gap-1 mb-3">
+            <label for="email">Phone Number</label>
+            <input
+              v-model="userInfor.phoneNumber"
+              class="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
+              type="text"
+              name="phoneNumber"
+              placeholder="Type Phone Number"
+              id="phoneNumber"
+              required
+            />
+          </div>
           <div class="flex flex-col w-full gap-1 mb-3">
             <label for="email">Email</label>
             <input
@@ -42,6 +64,18 @@ function handleInputChange(event: Event) {
               name="email"
               placeholder="Type Email address"
               id="email"
+              required
+            />
+          </div>
+          <div class="flex flex-col w-full gap-1 mb-3">
+            <label for="email">KRA Pin</label>
+            <input
+              v-model="userInfor.kraPin"
+              class="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
+              type="text"
+              name="kraPin"
+              placeholder="Type KRA Pin"
+              id="kraPin"
               required
             />
           </div>
@@ -57,16 +91,28 @@ function handleInputChange(event: Event) {
               required
             />
           </div>
+          <div class="flex flex-col w-full gap-1 mb-3">
+            <label for="password">Confirm Password</label>
+            <input
+              v-model="userInfor.password2"
+              class="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
+              type="password"
+              name="password"
+              placeholder="Type Password"
+              id="password"
+              required
+            />
+          </div>
           <button
             class="bg-slate-800 w-full hover:shadow-blue-300 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
           >
-            Sign In
+            Register
           </button>
           <div class="flex items-center mb-3 gap-3 justify-center">
             <p>
-              Don't have an account?
-              <router-link class="font-bold" to="/auth/register">
-                Sign Up
+              Already have an account?
+              <router-link class="font-bold" to="/auth/login">
+                Sign In
               </router-link>
             </p>
           </div>
