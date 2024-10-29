@@ -13,9 +13,13 @@ export const processHttpErrors = (error: unknown) => {
   const router = useRouter()
   const $toast = useToast()
   if (error.status == 401) {
-    $toast.error(error.response.message)
-    router.push('Login')
+    $toast.error(error.response.data.message, {
+      position: 'top-right',
+    })
+    router.push({ name: 'Login' })
   } else {
-    $toast.error(error.toString())
+    $toast.error(error.toString(), {
+      position: 'top-right',
+    })
   }
 }

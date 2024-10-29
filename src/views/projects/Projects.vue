@@ -6,9 +6,11 @@ import Loader from '@/shared/components/Loader.vue'
 import Button from '@/shared/ui/Button.vue'
 
 import { ref, onMounted } from 'vue'
+import Modal from '@/shared/components/Modal.vue'
 
-const projects = ref([])
+const projects = ref<unknown[]>([])
 const loader = ref(false)
+const showDialog = ref(false)
 
 onMounted(async () => {
   loader.value = true
@@ -18,10 +20,16 @@ onMounted(async () => {
     loader.value = false
   } catch (error) {
     loader.value = false
-    console.log('Error fetching customers:', error) // Log any errors in the console
     processHttpErrors(error)
   }
 })
+
+const addProject = () => {
+  showDialog.value = false
+  setTimeout(() => {
+    showDialog.value = true
+  }, 50)
+}
 </script>
 
 <template>
@@ -90,7 +98,24 @@ onMounted(async () => {
     </div>
     <div class="flex flex-col justify-center items-center min-h-[50vh]" v-else>
       <span class="font-bold text-blue-500 text-lg">No Project available</span>
-      <Button class="mt-5">Add Project</Button>
+      <Button class="mt-5" @click="addProject">Add Project</Button>
     </div>
   </div>
+  <!-- <Modal
+    :modalTitle="'Add Project'"
+    :state="showDialog"
+    @stateChange="showDialog = $event"
+  >
+  </Modal> -->
+  <Modal
+    :modalTitle="'Add Project'"
+    :state="showDialog"
+    @stateChange="
+      value => {
+        showDialog = value
+      }
+    "
+    @hidden="showDialog = false"
+  >
+  </Modal>
 </template>

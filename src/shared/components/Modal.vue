@@ -1,120 +1,103 @@
-<script lang="ts">
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+<script setup lang="ts">
 import { ref, watch, onMounted, computed } from 'vue'
 import { Modal } from 'flowbite'
 
-export default {
-  name: 'DialogComponent',
-  props: {
-    modalTitle: {
-      type: String,
-      default: '',
-    },
-    state: {
-      type: Boolean,
-      default: false,
-    },
-    closable: {
-      type: Boolean,
-      default: false,
-    },
-    backdrop: {
-      type: String,
-      default: 'dynamic',
-    },
-    placement: {
-      type: String,
-      default: 'center',
-    },
-    width: {
-      type: String,
-      default: '2xl',
-    },
-  },
-  emits: ['stateChange', 'hidden', 'show', 'toggled'],
+// Define props
+const props = defineProps<{
+  modalTitle?: string
+  state?: boolean
+  closable?: boolean
+  backdrop?: string
+  placement?: string
+  width?: string
+}>()
 
-  setup(props, { emit }) {
-    const modalElement = ref(null)
-    const modal = ref(null)
+// Define emitted events
+const emit = defineEmits<{
+  (e: 'stateChange', value: boolean): void
+  (e: 'hidden', modal: Modal | null): void
+  (e: 'show', modal: Modal | null): void
+  (e: 'toggled', modal: Modal | null): void
+}>()
 
-    const widthClass = {
-      sm: 'max-w-sm',
-      md: 'max-w-md',
-      lg: 'max-w-lg',
-      xl: 'max-w-xl',
-      '2xl': 'max-w-2xl',
-      '3xl': 'max-w-3xl',
-      '4xl': 'max-w-4xl',
-      '5xl': 'max-w-5xl',
-      '6xl': 'max-w-6xl',
-      '7xl': 'max-w-7xl',
-      full: 'max-w-full',
-    }
+const modalElement = ref<HTMLElement | null>(null)
+const modal = ref<Modal | null>(null)
 
-    const showModal = () => {
-      modal.value?.show()
-      emit('stateChange', true)
-      emit('show', modal.value)
-    }
+// Dynamically compute the width class based on prop
+const widthClass = computed(() => {
+  const widths = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-xl',
+    '2xl': 'max-w-2xl',
+    '3xl': 'max-w-3xl',
+    '4xl': 'max-w-4xl',
+    '5xl': 'max-w-5xl',
+    '6xl': 'max-w-6xl',
+    '7xl': 'max-w-7xl',
+    full: 'max-w-full',
+  }
+  return widths[props.width || '2xl'] // Default to 'max-w-2xl' if width prop is unrecognized
+})
 
-    const hideModal = () => {
-      modal.value?.hide()
-      emit('stateChange', false)
-      emit('hidden', modal.value)
-    }
-
-    const toggleModal = () => {
-      if (modal.value?.isVisible) {
-        hideModal()
-      } else {
-        showModal()
-      }
-      emit('toggled', modal.value)
-    }
-
-    const initModal = () => {
-      const modalOptions = {
-        closable: props.closable,
-        backdrop: props.backdrop,
-        placement: props.placement,
-        backdropClasses:
-          'bg-gray-900 opacity-50 dark:bg-gray-900 dark:opacity-80 fixed inset-0',
-        onHide: hideModal,
-        onShow: showModal,
-        onToggle: toggleModal,
-      }
-
-      modal.value = new Modal(modalElement.value, modalOptions, {
-        override: true,
-      })
-    }
-
-    onMounted(() => {
-      initModal()
-      if (props.state) {
-        showModal()
-      }
-    })
-
-    watch(
-      () => props.state,
-      newValue => {
-        if (newValue) {
-          showModal()
-        } else {
-          hideModal()
-        }
-      },
-    )
-
-    return {
-      modalElement,
-      showModal,
-      hideModal,
-      widthClass,
-    }
-  },
+const showModal = () => {
+  modal.value?.show()
+  emit('stateChange', true)
+  emit('show', modal.value)
 }
+
+const hideModal = () => {
+  modal.value?.hide()
+  emit('stateChange', false)
+  emit('hidden', modal.value)
+}
+
+const toggleModal = () => {
+  if (modal.value?.isVisible) {
+    hideModal()
+  } else {
+    showModal()
+  }
+  emit('toggled', modal.value)
+}
+
+const initModal = () => {
+  const modalOptions = {
+    closable: props.closable,
+    backdrop: props.backdrop,
+    placement: props.placement,
+    backdropClasses:
+      'bg-gray-900 opacity-50 dark:bg-gray-900 dark:opacity-80 fixed inset-0',
+    onHide: hideModal,
+    onShow: showModal,
+    onToggle: toggleModal,
+  }
+
+  modal.value = new Modal(modalElement.value as HTMLElement, modalOptions, {
+    override: true,
+  })
+}
+
+// Initialize the modal when the component is mounted
+onMounted(() => {
+  initModal()
+  if (props.state) {
+    showModal()
+  }
+})
+
+// Watch the state prop to control modal visibility
+watch(
+  () => props.state,
+  newValue => {
+    if (newValue) {
+      showModal()
+    } else {
+      hideModal()
+    }
+  },
+)
 </script>
 
 <template>
@@ -124,7 +107,7 @@ export default {
     aria-hidden="true"
     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
   >
-    <div :class="widthClass[width]" class="relative max-h-full w-full">
+    <div :class="widthClass" class="relative max-h-full w-full">
       <!-- Modal content -->
       <div
         class="relative rounded-2xl p-4 lg:p-6 2xl:p-8 bg-white shadow dark:bg-gray-700"

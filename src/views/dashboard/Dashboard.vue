@@ -18,10 +18,10 @@ const limit = defineProps({
 })
 
 const viewUsers = () => {
-  router.push('Users')
+  router.push({ name: 'Users' })
 }
 const viewAllevents = () => {
-  router.push('Events')
+  router.push({ name: 'Events' })
 }
 
 const listUsers = async () => {
