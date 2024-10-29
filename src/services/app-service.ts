@@ -8,7 +8,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const processHttpErrors = (error: unknown) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const processHttpErrors = (error: any) => {
   console.log(error)
   const router = useRouter()
   const $toast = useToast()

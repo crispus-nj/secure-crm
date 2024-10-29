@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { IEvent } from '@/models/Event'
+import type { IUser } from '@/models/User'
 import {
   processHttpErrors,
   convertDateToMoreReadable,
@@ -10,9 +12,9 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const users = ref([])
-const events = ref([])
-const loading = ref(false)
+const users = ref<IUser[]>([])
+const events = ref<IEvent[]>([])
+const loading = ref<boolean>(false)
 
 const limit = defineProps({
   limit: {

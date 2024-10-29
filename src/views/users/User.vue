@@ -4,7 +4,20 @@ import Loader from '@/shared/components/Loader.vue'
 
 import { ref, onMounted } from 'vue'
 
-const customers = ref([])
+interface Role {
+  name: string
+}
+
+interface Customer {
+  firstName: string
+  lastName: string
+  kraPin: string
+  phoneNumber: string
+  email: string
+  role?: Role // Make role optional if it can be undefined
+}
+
+const customers = ref<Customer[]>([])
 const loader = ref(false)
 
 onMounted(async () => {
@@ -76,7 +89,7 @@ onMounted(async () => {
               </td>
               <td class="border-t px-4 py-3">
                 <span class="px-2 py-1 rounded-full text-xs font-semibold">
-                  {{ customer?.role?.name }}
+                  {{ customer.role?.name }}
                 </span>
               </td>
             </tr>

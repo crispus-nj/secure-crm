@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { IUser } from '@/models/user.interface'
+import type { IUser } from '@/models/User'
 import api from '@/services/http'
 
 function getUserFromSession(): IUser | null {

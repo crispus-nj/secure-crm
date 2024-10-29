@@ -3,7 +3,7 @@ import api from '@/services/http'
 import {
   processHttpErrors,
   convertDateToMoreReadable,
-} from '@/services/app-service.ts'
+} from '@/services/app-service'
 
 import Loader from '@/shared/components/Loader.vue'
 import AddEvent from './AddEvent.vue'
@@ -12,8 +12,9 @@ import Button from '@/shared/ui/Button.vue'
 
 import { ref, onMounted, watch } from 'vue'
 import Modal from '@/shared/components/Modal.vue'
+import type { IEvent } from '@/models/Event'
 
-const events = ref<unknown[]>([])
+const events = ref<IEvent[]>([])
 const loader = ref(false)
 const showDialog = ref(false)
 
@@ -63,16 +64,11 @@ const handleSubmitResult = (result: boolean) => {
 
 const timeAgo = (isoString: string) => {
   // Parse the ISO string into a Date object
-  const date = new Date(isoString)
-
-  // Check if the date is valid
-  if (isNaN(date)) {
-    throw new Error('Invalid date format')
-  }
+  const date: Date = new Date(isoString)
 
   // Get the current date and time
   const now = new Date()
-  const diffTime = now - date // Difference in milliseconds
+  const diffTime = now.getTime() - date.getTime() // Difference in milliseconds
 
   // Calculate time units
   const seconds = Math.floor(diffTime / 1000)

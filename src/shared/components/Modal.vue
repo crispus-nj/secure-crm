@@ -1,15 +1,26 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from 'vue'
-import { Modal } from 'flowbite'
+import { Modal, type modalPlacement, type modalBackdrop } from 'flowbite'
 
 // Define props
 const props = defineProps<{
   modalTitle?: string
   state?: boolean
   closable?: boolean
-  backdrop?: string
-  placement?: string
-  width?: string
+  backdrop?: modalBackdrop // Adjusted the type to modalBackdrop
+  placement?: modalPlacement // adjust as per ModalOptions type
+  width?:
+    | 'sm'
+    | 'md'
+    | 'lg'
+    | 'xl'
+    | '2xl'
+    | '3xl'
+    | '4xl'
+    | '5xl'
+    | '6xl'
+    | '7xl'
+    | 'full'
 }>()
 
 // Define emitted events
@@ -38,6 +49,7 @@ const widthClass = computed(() => {
     '7xl': 'max-w-7xl',
     full: 'max-w-full',
   }
+
   return widths[props.width || '2xl'] // Default to 'max-w-2xl' if width prop is unrecognized
 })
 
@@ -65,7 +77,7 @@ const toggleModal = () => {
 const initModal = () => {
   const modalOptions = {
     closable: props.closable,
-    backdrop: props.backdrop,
+    backdrop: props.backdrop, // `backdrop` is now typed as modalBackdrop
     placement: props.placement,
     backdropClasses:
       'bg-gray-900 opacity-50 dark:bg-gray-900 dark:opacity-80 fixed inset-0',
@@ -74,9 +86,7 @@ const initModal = () => {
     onToggle: toggleModal,
   }
 
-  modal.value = new Modal(modalElement.value as HTMLElement, modalOptions, {
-    override: true,
-  })
+  modal.value = new Modal(modalElement.value as HTMLElement, modalOptions)
 }
 
 // Initialize the modal when the component is mounted
@@ -154,7 +164,3 @@ watch(
     </div>
   </div>
 </template>
-
-<style scoped>
-/* Additional styling if needed */
-</style>

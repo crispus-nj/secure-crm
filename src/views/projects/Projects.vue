@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import api from '@/services/http'
-import { processHttpErrors } from '@/services/app-service.ts'
+import { processHttpErrors } from '@/services/app-service'
 
 import Loader from '@/shared/components/Loader.vue'
 import AddProject from './AddProject.vue'
@@ -9,9 +9,10 @@ import Button from '@/shared/ui/Button.vue'
 
 import { ref, onMounted, watch } from 'vue'
 import Modal from '@/shared/components/Modal.vue'
+import type { Project } from '@/models/project'
 
-const projects = ref<unknown[]>([])
-const loader = ref(false)
+const projects = ref<Project[]>([])
+const loader = ref<boolean>(false)
 const showDialog = ref(false)
 
 watch(showDialog, async newValue => {

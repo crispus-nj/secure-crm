@@ -3,8 +3,9 @@ import { processHttpErrors } from '@/services/app-service'
 import Card from '@/shared/ui/Card.vue'
 import api from '@/services/http'
 import { ref, onMounted } from 'vue'
+import type { Role } from '@/models/Role'
 
-const roles = ref([])
+const roles = ref<Role[]>([])
 const loader = ref(false)
 
 onMounted(async () => {

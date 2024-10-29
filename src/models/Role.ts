@@ -1,6 +1,6 @@
-import type { IUser } from './user.interface'
+import type { IUser } from './User'
 
-export interface IRole {
+export interface Role {
   id: number
   name: string
   createdAt: Date

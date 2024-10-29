@@ -1,4 +1,4 @@
-import type { IRole } from './role.interface'
+import type { Role } from './Role'
 
 export interface IUser {
   id: number
@@ -8,7 +8,7 @@ export interface IUser {
   phoneNumber: string
   address: string
   kraPin: string
-  role: IRole
+  role: Role
   attachments: string[]
   createdAt: Date
   updatedAt: Date
