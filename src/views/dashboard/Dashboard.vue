@@ -1,5 +1,44 @@
 <script setup lang="ts">
+import { processHttpErrors } from '@/services/app-service'
+import api from '@/services/http'
+import Loader from '@/shared/components/Loader.vue'
 import Card from '@/shared/ui/Card.vue'
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const users = ref([])
+const loading = ref(false)
+
+const limit = defineProps({
+  limit: {
+    type: Number,
+    default: 3,
+  },
+})
+
+const viewUsers = () => {
+  router.push('Users')
+}
+const viewAllevents = () => {
+  router.push('Events')
+}
+
+const listUsers = async () => {
+  try {
+    loading.value = true
+    const response = await api.get('/users')
+    users.value = response.data
+    loading.value = false
+  } catch (error) {
+    loading.value = false
+    processHttpErrors(error)
+  }
+}
+
+onMounted(async () => {
+  await listUsers()
+})
 </script>
 
 <template>
@@ -8,141 +47,53 @@ import Card from '@/shared/ui/Card.vue'
     <div class="shadow-xl rounded-lg flex-grow">
       <p class="flex justify-between items-center px-10">
         <span class="font-medium text-lg">Users</span>
-        <span class="text-[#3F8CFF] cursor-pointer hover:underline"
+        <span
+          class="text-[#3F8CFF] cursor-pointer hover:underline"
+          @click="viewUsers"
           >View All</span
         >
       </p>
-      <div class="grid md:grid-cols-3 md:gap-6 gap-8 lg:gap-4 p-10">
-        <Card
-          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
-        >
-          <!-- Profile logo -->
-          <div class="">
-            <img src="" alt="profile" class="w-20 rounded-full" />
-          </div>
-          <!-- name -->
-          <p class="font-semibold text-sm text-center">
-            Crispus Njenga Muthiora
-          </p>
-          <!-- title -->
-          <p class="font-regular text-sm text-center">Software Developer</p>
-          <!-- level -->
-          <button
-            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+      <section v-if="!loading">
+        <div class="grid md:grid-cols-3 md:gap-6 gap-8 lg:gap-4 p-10">
+          <Card
+            class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
+            v-for="user in users.splice(0, limit.limit)"
+            v-bind:key="user.id"
           >
-            Middle
-          </button>
-        </Card>
-        <Card
-          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
-        >
-          <!-- Profile logo -->
-          <div class="">
-            <img src="" alt="profile" class="w-20 rounded-full" />
-          </div>
-          <!-- name -->
-          <p class="font-semibold text-sm text-center">
-            Crispus Njenga Muthiora
-          </p>
-          <!-- title -->
-          <p class="font-regular text-sm text-center">Software Developer</p>
-          <!-- level -->
-          <button
-            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
-          >
-            Middle
-          </button>
-        </Card>
+            <!-- Profile logo -->
+            <div class="">
+              <img src="" alt="profile" class="w-20 rounded-full" />
+            </div>
+            <!-- name -->
+            <p class="font-semibold text-sm text-center">
+              {{ user?.firstName }} {{ user?.lastName }}
+            </p>
+            <!-- title -->
+            <p class="font-regular text-sm text-center">{{ user?.email }}</p>
+            <!-- level -->
+            <button
+              class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+            >
+              {{ user?.role?.name }}
+            </button>
+          </Card>
+        </div>
+      </section>
 
-        <Card
-          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
-        >
-          <!-- Profile logo -->
-          <div class="">
-            <img src="" alt="profile" class="w-20 rounded-full" />
-          </div>
-          <!-- name -->
-          <p class="font-semibold text-sm text-center">
-            Crispus Njenga Muthiora
-          </p>
-          <!-- title -->
-          <p class="font-regular text-sm text-center">Software Developer</p>
-          <!-- level -->
-          <button
-            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
-          >
-            Middle
-          </button>
-        </Card>
-
-        <Card
-          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
-        >
-          <!-- Profile logo -->
-          <div class="">
-            <img src="" alt="profile" class="w-20 rounded-full" />
-          </div>
-          <!-- name -->
-          <p class="font-semibold text-sm text-center">
-            Crispus Njenga Muthiora
-          </p>
-          <!-- title -->
-          <p class="font-regular text-sm text-center">Software Developer</p>
-          <!-- level -->
-          <button
-            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
-          >
-            Middle
-          </button>
-        </Card>
-
-        <Card
-          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
-        >
-          <!-- Profile logo -->
-          <div class="">
-            <img src="" alt="profile" class="w-20 rounded-full" />
-          </div>
-          <!-- name -->
-          <p class="font-semibold text-sm text-center">
-            Crispus Njenga Muthiora
-          </p>
-          <!-- title -->
-          <p class="font-regular text-sm text-center">Software Developer</p>
-          <!-- level -->
-          <button
-            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
-          >
-            Middle
-          </button>
-        </Card>
-
-        <Card
-          class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
-        >
-          <!-- Profile logo -->
-          <div class="">
-            <img src="" alt="profile" class="w-20 rounded-full" />
-          </div>
-          <!-- name -->
-          <p class="font-semibold text-sm text-center">
-            Crispus Njenga Muthiora
-          </p>
-          <!-- title -->
-          <p class="font-regular text-sm text-center">Software Developer</p>
-          <!-- level -->
-          <button
-            class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
-          >
-            Middle
-          </button>
-        </Card>
+      <div
+        class="flex flex-col justify-center items-center min-h-[50vh]"
+        v-else
+      >
+        <!-- <span class="font-bold text-blue-500 text-lg">No Users available</span> -->
+        <Loader />
       </div>
     </div>
     <div class="bg-white shadow-lg rounded-lg p-4 max-w-sm mx-auto">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold">Nearest Events</h2>
-        <a href="#" class="text-blue-500 hover:underline">View all</a>
+        <a href="#" class="text-blue-500 hover:underline" @click="viewAllevents"
+          >View all</a
+        >
       </div>
 
       <!-- Event Item 1 -->
