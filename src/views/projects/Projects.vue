@@ -1,18 +1,36 @@
 <script setup lang="ts">
 import api from '@/services/http'
 import { processHttpErrors } from '@/services/app-service.ts'
+
 import Loader from '@/shared/components/Loader.vue'
+import AddProject from './AddProject.vue'
 
 import Button from '@/shared/ui/Button.vue'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import Modal from '@/shared/components/Modal.vue'
 
 const projects = ref<unknown[]>([])
 const loader = ref(false)
 const showDialog = ref(false)
 
+watch(showDialog, async newValue => {
+  if (!newValue) {
+    await listProjects()
+  }
+})
+
 onMounted(async () => {
+  await listProjects()
+})
+
+const handleDialogClose = async () => {
+  console.log('a-a-a-a-a-a--a-a--a')
+  showDialog.value = false
+  await listProjects()
+}
+
+const listProjects = async () => {
   loader.value = true
   try {
     const users = await api.get('/projects')
@@ -22,7 +40,7 @@ onMounted(async () => {
     loader.value = false
     processHttpErrors(error)
   }
-})
+}
 
 const addProject = () => {
   showDialog.value = false
@@ -30,11 +48,23 @@ const addProject = () => {
     showDialog.value = true
   }, 50)
 }
+
+const handleSubmitResult = (result: boolean) => {
+  if (result) {
+    console.log('Project added successfully.')
+    showDialog.value = false
+  } else {
+    console.error('Failed to add project.')
+  }
+}
 </script>
 
 <template>
   <div class="bg-gray-50 min-h-screen p-8">
     <Loader v-if="loader"></Loader>
+    <div class="flex justify-end mb-5" v-if="projects.length > 0">
+      <Button class="mt-5" @click="addProject">Add Project</Button>
+    </div>
     <div class="bg-white rounded-lg shadow-lg p-6" v-if="projects.length > 0">
       <div
         class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 space-y-4 md:space-y-0"
@@ -64,9 +94,10 @@ const addProject = () => {
           <thead>
             <tr class="text-left text-gray-500 text-sm uppercase">
               <th class="px-4 py-3">Name</th>
-              <th class="px-4 py-3 hidden md:table-cell">KRA Pin</th>
-              <th class="px-4 py-3">Phone Number</th>
-              <th class="px-4 py-3 hidden lg:table-cell">Email</th>
+              <th class="px-4 py-3 hidden md:table-cell">Description</th>
+              <th class="px-4 py-3 hidden lg:table-cell">Location</th>
+              <th class="px-4 py-3 hidden lg:table-cell">Start Date</th>
+              <th class="px-4 py-3 hidden lg:table-cell">End Date</th>
               <th class="px-4 py-3">Status</th>
             </tr>
           </thead>
@@ -77,19 +108,24 @@ const addProject = () => {
               class="text-gray-700"
             >
               <td class="border-t px-4 py-3">
-                {{ project.firstName }} {{ project.lastName }}
+                {{ project.name }}
               </td>
               <td class="border-t px-4 py-3 hidden md:table-cell">
-                {{ project.kraPin }}
+                {{ project.description }}
               </td>
-              <td class="border-t px-4 py-3">{{ project.phoneNumber }}</td>
+              <td class="border-t px-4 py-3">{{ project.location }}</td>
               <td class="border-t px-4 py-3 hidden lg:table-cell">
-                {{ project.email }}
+                {{ project.startDate }}
+              </td>
+              <td class="border-t px-4 py-3 hidden lg:table-cell">
+                {{ project.endDate }}
               </td>
               <td class="border-t px-4 py-3">
-                <span class="px-2 py-1 rounded-full text-xs font-semibold">
-                  {{ customer?.role?.name }}
-                </span>
+                <button
+                  class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
+                >
+                  {{ project?.status }}
+                </button>
               </td>
             </tr>
           </tbody>
@@ -101,21 +137,17 @@ const addProject = () => {
       <Button class="mt-5" @click="addProject">Add Project</Button>
     </div>
   </div>
-  <!-- <Modal
-    :modalTitle="'Add Project'"
-    :state="showDialog"
-    @stateChange="showDialog = $event"
-  >
-  </Modal> -->
+
   <Modal
     :modalTitle="'Add Project'"
     :state="showDialog"
     @stateChange="
-      value => {
+      (value: any) => {
         showDialog = value
       }
     "
-    @hidden="showDialog = false"
+    @hidden="handleDialogClose"
   >
+    <AddProject @submitResult="handleSubmitResult" />
   </Modal>
 </template>
