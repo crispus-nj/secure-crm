@@ -49,7 +49,7 @@ const listRoles = async () => {
     </li> -->
   </ul>
   <Loader v-if="loader" />
-  <section v-if="!loading">
+  <section v-if="!loader">
     <div class="grid md:grid-cols-3 md:gap-6 gap-8 lg:gap-4 p-10">
       <Card
         class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
@@ -62,7 +62,7 @@ const listRoles = async () => {
         </p>
         <!-- title -->
         <p class="font-regular text-sm text-center">
-          {{ convertDateToMoreReadable(user.createdAt) }}
+          {{ convertDateToMoreReadable(String(user.createdAt)) }}
         </p>
         <!-- level -->
       </Card>

@@ -99,7 +99,8 @@ onMounted(async () => {
             <button
               class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
             >
-              {{ customer?.role?.name ? customer?.role?.name : 'NA' }}
+              <span v-if="user?.role?.name">{{ user?.role?.name }}</span>
+              <span v-else>NA</span>
             </button>
           </Card>
         </div>
@@ -131,7 +132,7 @@ onMounted(async () => {
         <div class="flex-1">
           <h3 class="font-semibold">{{ event.name }}</h3>
           <p class="text-gray-500 text-sm">
-            {{ convertDateToMoreReadable(event.createdAt) }}
+            {{ convertDateToMoreReadable(String(event.createdAt)) }}
           </p>
         </div>
         <div class="flex items-center gap-1 text-gray-500">
@@ -141,7 +142,7 @@ onMounted(async () => {
               d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.414V7a1 1 0 0 0-2 0v5.586l4.707 4.707a1 1 0 1 0 1.414-1.414z"
             ></path>
           </svg>
-          <span class="text-sm">{{ timeAgo(event.createdAt) }}</span>
+          <span class="text-sm">{{ timeAgo(String(event.createdAt)) }}</span>
           <svg
             class="h-4 w-4 text-yellow-500"
             fill="currentColor"

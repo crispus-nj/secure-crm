@@ -84,7 +84,7 @@ const filteredProjects = computed(() => {
           <tbody>
             <tr
               v-for="customer in filteredProjects"
-              :key="customer.id"
+              :key="customer.email"
               class="text-gray-700"
             >
               <td class="border-t px-4 py-3">
