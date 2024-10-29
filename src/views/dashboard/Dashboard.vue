@@ -44,7 +44,7 @@ const listEvents = async () => {
   loading.value = true
   try {
     const users = await api.get('/events')
-    events.value = [...users.data]
+    events.value = [...users.data].splice(0, 4)
     loading.value = false
   } catch (error) {
     loading.value = false
@@ -53,8 +53,8 @@ const listEvents = async () => {
 }
 
 onMounted(async () => {
-  await listEvents()
-  await listUsers()
+  listEvents()
+  listUsers()
 })
 </script>
 
@@ -79,7 +79,8 @@ onMounted(async () => {
           >
             <!-- Profile logo -->
             <div class="">
-              <img src="" alt="profile" class="w-20 rounded-full" />
+              <img src="" class="w-20 rounded-full" />
+              <!-- <i class="pi pi-user w-10 h-10 bg-transparent"></i> -->
             </div>
             <!-- name -->
             <p class="font-semibold text-sm text-center">
@@ -87,7 +88,11 @@ onMounted(async () => {
             </p>
             <!-- title -->
             <p class="font-regular text-sm text-center">{{ user?.email }}</p>
+            <p class="font-regular text-sm text-center">
+              {{ user?.phoneNumber }}
+            </p>
             <!-- level -->
+
             <button
               class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
             >
@@ -116,7 +121,7 @@ onMounted(async () => {
       <!-- Event Item 1 -->
       <div
         class="flex items-center gap-4 mb-4"
-        v-for="event in events.splice(0, 4)"
+        v-for="event in events"
         v-bind:key="event.id"
       >
         <div class="w-1 bg-blue-500 h-full rounded"></div>
