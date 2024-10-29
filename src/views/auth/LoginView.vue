@@ -1,24 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { userStore } from '@/stores/user'
+import Loader from '@/shared/components/Loader.vue'
 
 const store = userStore()
-console.log('User data after reload:', store.$state.user)
 const userInfor = ref({
   email: '',
   password: '',
 })
 
 function submit() {
-  // Form submission logic
   store.login({ ...userInfor.value })
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function handleInputChange(event: Event) {
-  // Input change handling logic if needed
-  const { name, value } = event.target as HTMLInputElement
-  console.log(name, value)
 }
 </script>
 
@@ -57,7 +49,9 @@ function handleInputChange(event: Event) {
               required
             />
           </div>
+          <Loader v-if="store.loading" />
           <button
+            v-if="!store.loading"
             class="bg-slate-800 w-full hover:shadow-blue-300 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
           >
             Sign In
