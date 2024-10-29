@@ -46,17 +46,17 @@ onMounted(() => {
               ></path>
             </svg>
           </button>
-          <a href="https://flowbite.com" class="flex ms-2 md:me-24">
-            <img
+          <div class="flex ms-2 md:me-24">
+            <!-- <img
               src="https://flowbite.com/docs/images/logo.svg"
               class="h-8 me-3"
               alt="FlowBite Logo"
-            />
+            /> -->
             <span
               class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"
-              >Flowbite</span
+              >C <span class="italic text-blue-500">R</span> M</span
             >
-          </a>
+          </div>
         </div>
         <div class="flex items-center">
           <div class="flex items-center ms-3">
@@ -68,11 +68,12 @@ onMounted(() => {
                 data-dropdown-toggle="dropdown-user"
               >
                 <span class="sr-only">Open user menu</span>
-                <img
+                <!-- <img
                   class="w-8 h-8 rounded-full"
                   src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                   alt="user photo"
-                />
+                /> -->
+                <i class="pi pi-user w-10 h-10 bg-transparent"></i>
               </button>
             </div>
             <div

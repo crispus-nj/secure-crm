@@ -5,7 +5,7 @@ import axios from 'axios'
 const api = axios.create({
   // baseURL: API_BASE_URL,
   // baseURL: 'http://192.168.0.110:8000',
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://access-control-module.onrender.com',
 })
 
 api.interceptors.request.use(

@@ -8,6 +8,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const users = ref([])
+const events = ref([])
 const loading = ref(false)
 
 const limit = defineProps({
@@ -36,7 +37,20 @@ const listUsers = async () => {
   }
 }
 
+const listEvents = async () => {
+  loading.value = true
+  try {
+    const users = await api.get('/events')
+    events.value = [...users.data]
+    loading.value = false
+  } catch (error) {
+    loading.value = false
+    processHttpErrors(error)
+  }
+}
+
 onMounted(async () => {
+  await listEvents()
   await listUsers()
 })
 </script>
@@ -90,17 +104,21 @@ onMounted(async () => {
     </div>
     <div class="bg-white shadow-lg rounded-lg p-4 max-w-sm mx-auto">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold">Nearest Events</h2>
+        <h2 class="text-xl font-semibold">Events</h2>
         <a href="#" class="text-blue-500 hover:underline" @click="viewAllevents"
           >View all</a
         >
       </div>
 
       <!-- Event Item 1 -->
-      <div class="flex items-center gap-4 mb-4">
+      <div
+        class="flex items-center gap-4 mb-4"
+        v-for="event in events"
+        v-bind:key="event.id"
+      >
         <div class="w-1 bg-blue-500 h-full rounded"></div>
         <div class="flex-1">
-          <h3 class="font-semibold">Presentation of the new department</h3>
+          <h3 class="font-semibold">{{ event.name }}</h3>
           <p class="text-gray-500 text-sm">Today | 5:00 PM</p>
         </div>
         <div class="flex items-center gap-1 text-gray-500">
@@ -118,55 +136,6 @@ onMounted(async () => {
           >
             <!-- Up Arrow Icon -->
             <path d="M12 4l6 6h-5v10h-2V10H6l6-6z"></path>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Event Item 2 -->
-      <div class="flex items-center gap-4 mb-4">
-        <div class="w-1 bg-pink-500 h-full rounded"></div>
-        <div class="flex-1">
-          <h3 class="font-semibold">Anna's Birthday</h3>
-          <p class="text-gray-500 text-sm">Today | 6:00 PM</p>
-        </div>
-        <div class="flex items-center gap-1 text-gray-500">
-          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.414V7a1 1 0 0 0-2 0v5.586l4.707 4.707a1 1 0 1 0 1.414-1.414z"
-            ></path>
-          </svg>
-          <span class="text-sm">4h</span>
-          <svg
-            class="h-4 w-4 text-green-500"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <!-- Down Arrow Icon -->
-            <path d="M12 20l-6-6h5V4h2v10h5l-6 6z"></path>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Event Item 3 -->
-      <div class="flex items-center gap-4">
-        <div class="w-1 bg-purple-500 h-full rounded"></div>
-        <div class="flex-1">
-          <h3 class="font-semibold">Ray’s Birthday</h3>
-          <p class="text-gray-500 text-sm">Tomorrow | 2:00 PM</p>
-        </div>
-        <div class="flex items-center gap-1 text-gray-500">
-          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.414V7a1 1 0 0 0-2 0v5.586l4.707 4.707a1 1 0 1 0 1.414-1.414z"
-            ></path>
-          </svg>
-          <span class="text-sm">4h</span>
-          <svg
-            class="h-4 w-4 text-green-500"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 20l-6-6h5V4h2v10h5l-6 6z"></path>
           </svg>
         </div>
       </div>
