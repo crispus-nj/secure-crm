@@ -1,5 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { HTMLAttributes } from 'vue'
+import { cn } from '@/services/app-service'
+
+const props = defineProps<{
+  class: HTMLAttributes['class']
+}>()
+</script>
 
 <template>
-  <h1>This is a Button</h1>
+  <button
+    :class="
+      cn(
+        'rounded-lg py-2 border border-blue-600 text-slate-950 hover:bg-blue-500 hover:text-white font-medium px-10',
+        props.class,
+      )
+    "
+  >
+    <slot />
+  </button>
 </template>

@@ -11,11 +11,24 @@ export const userStore = defineStore('user', {
   state: () => ({
     // Initialize user state from sessionStorage
     user: getUserFromSession() || null,
+    loading: false,
   }),
   actions: {
     async login(data: unknown | null) {
+      this.loading = true
       try {
         const response = await api.post('/auth/login', data)
+        this.user = response.data.Payload
+        sessionStorage.setItem('user', JSON.stringify(this.user))
+        this.loading = false
+      } catch (error: unknown) {
+        console.log(error)
+        this.loading = false
+      }
+    },
+    async register(data: unknown | null) {
+      try {
+        const response = await api.post('/auth/register', data)
         this.user = response.data.Payload
         sessionStorage.setItem('user', JSON.stringify(this.user))
       } catch (error: unknown) {
