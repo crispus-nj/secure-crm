@@ -40,6 +40,7 @@ const filteredProjects = computed(() => {
         user.firstName.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
         user.lastName.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+        user.kraPin.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
         user.phoneNumber.toLowerCase().includes(searchTerm.value.toLowerCase()),
     )
     return filtered.length ? filtered : 'Data Not Found'
@@ -61,18 +62,12 @@ const filteredProjects = computed(() => {
           <input
             type="text"
             placeholder="Search"
+            v-model="searchTerm"
             class="border border-gray-300 rounded-md px-3 py-2 w-full md:w-auto"
           />
-          <!-- <select
-            class="border border-gray-300 rounded-md px-3 py-2 text-gray-600"
-          >
-            <option>Sort by: Newest</option>
-            <option>Sort by: Oldest</option>
-          </select> -->
         </div>
       </div>
       <Loader v-if="loader"></Loader>
-      <!-- Table Wrapper for Horizontal Scroll -->
       <div class="overflow-x-auto" v-if="Array.isArray(filteredProjects)">
         <table
           class="w-full bg-white border border-gray-200 rounded-lg min-w-max"

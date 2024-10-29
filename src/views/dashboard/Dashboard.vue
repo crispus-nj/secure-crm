@@ -4,6 +4,7 @@ import type { IUser } from '@/models/User'
 import {
   processHttpErrors,
   convertDateToMoreReadable,
+  timeAgo,
 } from '@/services/app-service'
 import api from '@/services/http'
 import Loader from '@/shared/components/Loader.vue'
@@ -98,7 +99,7 @@ onMounted(async () => {
             <button
               class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
             >
-              {{ customer.role?.name ? customer.role?.name : 'NA' }}
+              {{ customer?.role?.name ? customer?.role?.name : 'NA' }}
             </button>
           </Card>
         </div>
