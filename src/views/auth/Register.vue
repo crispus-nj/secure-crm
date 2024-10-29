@@ -25,11 +25,13 @@ const submit = async () => {
     lastName: userInfor.value.lastName.trim(),
     password: userInfor.value.password.trim(),
     kraPin: userInfor.value.kraPin.trim(),
+    email: userInfor.value.email.trim(),
     address: userInfor.value.address.trim(),
     attachments: attachments,
+    phoneNumber: userInfor.value.phoneNumber.trim(),
+    role: 1,
   }
   store.register({ ...userObj })
-  console.log(userObj)
 }
 
 const convertFileToBase64 = (file: File): Promise<string> => {

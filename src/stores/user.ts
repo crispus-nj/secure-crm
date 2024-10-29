@@ -27,12 +27,15 @@ export const userStore = defineStore('user', {
       }
     },
     async register(data: unknown | null) {
+      this.loading = true
       try {
         const response = await api.post('/auth/register', data)
         this.user = response.data.Payload
         sessionStorage.setItem('user', JSON.stringify(this.user))
+        this.loading = false
       } catch (error: unknown) {
         console.log(error)
+        this.loading = false
       }
     },
     logOut() {

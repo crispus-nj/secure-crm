@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import api from '@/services/http'
-import { processHttpErrors } from '@/services/app-service.ts'
+import {
+  processHttpErrors,
+  convertDateToMoreReadable,
+} from '@/services/app-service.ts'
 
 import Loader from '@/shared/components/Loader.vue'
 import AddEvent from './AddEvent.vue'
@@ -56,30 +59,6 @@ const handleSubmitResult = (result: boolean) => {
   } else {
     console.error('Failed to add project.')
   }
-}
-
-const formatDateToFriendlyString = isoString => {
-  const date = new Date(isoString)
-
-  if (isNaN(date)) {
-    throw new Error('Invalid date format')
-  }
-
-  // Convert the date to East Africa Time (UTC+3)
-  const utcOffset = 3 * 60 // Offset in minutes for EAT
-  const localDate = new Date(date.getTime() + utcOffset * 60 * 1000)
-
-  // Format the date to a human-readable string
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-    timeZone: 'Africa/Nairobi',
-  }
-  return localDate.toLocaleString('en-US', options)
 }
 
 const timeAgo = (isoString: string) => {
@@ -148,7 +127,7 @@ const timeAgo = (isoString: string) => {
             </h3>
           </div>
           <p class="text-sm text-gray-500">
-            {{ formatDateToFriendlyString(event.createdAt) }}
+            {{ convertDateToMoreReadable(event.createdAt) }}
           </p>
         </div>
         <div class="flex items-center gap-1 text-gray-500">

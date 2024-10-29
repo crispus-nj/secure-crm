@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { processHttpErrors } from '@/services/app-service'
+import {
+  processHttpErrors,
+  convertDateToMoreReadable,
+} from '@/services/app-service'
 import api from '@/services/http'
 import Loader from '@/shared/components/Loader.vue'
 import Card from '@/shared/ui/Card.vue'
@@ -113,13 +116,15 @@ onMounted(async () => {
       <!-- Event Item 1 -->
       <div
         class="flex items-center gap-4 mb-4"
-        v-for="event in events"
+        v-for="event in events.splice(0, 4)"
         v-bind:key="event.id"
       >
         <div class="w-1 bg-blue-500 h-full rounded"></div>
         <div class="flex-1">
           <h3 class="font-semibold">{{ event.name }}</h3>
-          <p class="text-gray-500 text-sm">Today | 5:00 PM</p>
+          <p class="text-gray-500 text-sm">
+            {{ convertDateToMoreReadable(event.createdAt) }}
+          </p>
         </div>
         <div class="flex items-center gap-1 text-gray-500">
           <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">

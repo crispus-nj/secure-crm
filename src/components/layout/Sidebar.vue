@@ -68,11 +68,6 @@ onMounted(() => {
                 data-dropdown-toggle="dropdown-user"
               >
                 <span class="sr-only">Open user menu</span>
-                <!-- <img
-                  class="w-8 h-8 rounded-full"
-                  src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                  alt="user photo"
-                /> -->
                 <i class="pi pi-user w-10 h-10 bg-transparent"></i>
               </button>
             </div>
