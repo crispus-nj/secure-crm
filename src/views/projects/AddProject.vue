@@ -105,7 +105,7 @@ const submit = async () => {
           class="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
           type="password"
           name="password"
-          placeholder="Type Password"
+          placeholder="Type Project Description"
           id="password"
           required
         ></textarea>

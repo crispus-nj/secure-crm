@@ -2,7 +2,7 @@
 import api from '@/services/http'
 import Loader from '@/shared/components/Loader.vue'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 interface Role {
   name: string
@@ -18,7 +18,8 @@ interface Customer {
 }
 
 const customers = ref<Customer[]>([])
-const loader = ref(false)
+const loader = ref<boolean>(false)
+const searchTerm = ref<string>('')
 
 onMounted(async () => {
   loader.value = true
@@ -30,6 +31,20 @@ onMounted(async () => {
     loader.value = false
     console.log('Error fetching customers:', error) // Log any errors in the console
   }
+})
+
+const filteredProjects = computed(() => {
+  if (searchTerm.value.trim().length > 5) {
+    const filtered = customers.value.filter(
+      user =>
+        user.firstName.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+        user.phoneNumber.toLowerCase().includes(searchTerm.value.toLowerCase()),
+    )
+    return filtered.length ? filtered : 'Data Not Found'
+  }
+  return customers.value
 })
 </script>
 
@@ -48,17 +63,17 @@ onMounted(async () => {
             placeholder="Search"
             class="border border-gray-300 rounded-md px-3 py-2 w-full md:w-auto"
           />
-          <select
+          <!-- <select
             class="border border-gray-300 rounded-md px-3 py-2 text-gray-600"
           >
             <option>Sort by: Newest</option>
             <option>Sort by: Oldest</option>
-          </select>
+          </select> -->
         </div>
       </div>
       <Loader v-if="loader"></Loader>
       <!-- Table Wrapper for Horizontal Scroll -->
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto" v-if="Array.isArray(filteredProjects)">
         <table
           class="w-full bg-white border border-gray-200 rounded-lg min-w-max"
         >
@@ -73,8 +88,8 @@ onMounted(async () => {
           </thead>
           <tbody>
             <tr
-              v-for="customer in customers"
-              :key="customer.email"
+              v-for="customer in filteredProjects"
+              :key="customer.id"
               class="text-gray-700"
             >
               <td class="border-t px-4 py-3">
@@ -89,12 +104,15 @@ onMounted(async () => {
               </td>
               <td class="border-t px-4 py-3">
                 <span class="px-2 py-1 rounded-full text-xs font-semibold">
-                  {{ customer.role?.name }}
+                  {{ customer.role?.name ? customer.role?.name : 'NA' }}
                 </span>
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div v-else class="text-center text-gray-500 py-6">
+        {{ filteredProjects }}
       </div>
     </div>
   </div>

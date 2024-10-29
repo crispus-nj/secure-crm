@@ -58,3 +58,60 @@ export const convertDateToMoreReadable = (date: string) => {
   // Return the formatted date string
   return `${weekday}, ${day} ${month} ${year} ${hours}:${minutes}:${seconds}`
 }
+
+export const timeAgo = (isoString: string) => {
+  // Parse the ISO string into a Date object
+  const date: Date = new Date(isoString)
+
+  // Get the current date and time
+  const now = new Date()
+  const diffTime = now.getTime() - date.getTime() // Difference in milliseconds
+
+  // Calculate time units
+  const seconds = Math.floor(diffTime / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+
+  // Determine the appropriate string based on the time difference
+  let result
+  if (seconds < 60) {
+    result = seconds === 1 ? '1 second ago' : `${seconds} seconds ago`
+  } else if (minutes < 60) {
+    result = minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`
+  } else if (hours < 24) {
+    result = hours === 1 ? '1 hour ago' : `${hours} hours ago`
+  } else {
+    result = days === 1 ? '1 day ago' : `${days} days ago`
+  }
+
+  return result
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const showToast = (message: any, type: string) => {
+  const $toast = useToast()
+
+  const toastOptions = {
+    position: 'top-right' as
+      | 'top-right'
+      | 'top-left'
+      | 'bottom-right'
+      | 'bottom-left',
+  }
+
+  switch (type) {
+    case 'error':
+      $toast.error(message.toString(), toastOptions)
+      break
+    case 'success':
+      $toast.success(message.toString(), toastOptions)
+      break
+    case 'info':
+      $toast.info(message.toString(), toastOptions)
+      break
+    case 'warning':
+      $toast.warning(message.toString(), toastOptions)
+      break
+  }
+}

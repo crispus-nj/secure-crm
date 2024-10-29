@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { processHttpErrors } from '@/services/app-service'
+import {
+  processHttpErrors,
+  convertDateToMoreReadable,
+} from '@/services/app-service'
 import Card from '@/shared/ui/Card.vue'
 import api from '@/services/http'
 import { ref, onMounted } from 'vue'
 import type { Role } from '@/models/Role'
+import Loader from '@/shared/components/Loader.vue'
 
 const roles = ref<Role[]>([])
 const loader = ref(false)
@@ -15,7 +19,7 @@ onMounted(async () => {
 const listRoles = async () => {
   loader.value = true
   try {
-    const users = await api.get('/users/listroles')
+    const users = await api.post('/users/listroles', {})
     roles.value = [...users.data] // Ensure the data structure matches your expected format
     loader.value = false
   } catch (error) {
@@ -44,21 +48,24 @@ const listRoles = async () => {
       >
     </li> -->
   </ul>
-  <Card
-    class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
-    v-for="user in roles"
-    v-bind:key="user.id"
-  >
-    <!-- Profile logo -->
-    <div class="">
-      <img src="" alt="profile" class="w-20 rounded-full" />
+  <Loader v-if="loader" />
+  <section v-if="!loading">
+    <div class="grid md:grid-cols-3 md:gap-6 gap-8 lg:gap-4 p-10">
+      <Card
+        class="space-y-2 pt-6 pb-6 rounded-2xl bg-[#F4F9FD] shadow-lg border-none"
+        v-for="user in roles"
+        v-bind:key="user.id"
+      >
+        <!-- name -->
+        <p class="font-semibold text-sm text-center">
+          {{ user?.name }}
+        </p>
+        <!-- title -->
+        <p class="font-regular text-sm text-center">
+          {{ convertDateToMoreReadable(user.createdAt) }}
+        </p>
+        <!-- level -->
+      </Card>
     </div>
-    <!-- name -->
-    <p class="font-semibold text-sm text-center">
-      {{ user?.name }}
-    </p>
-    <!-- title -->
-    <p class="font-regular text-sm text-center">{{ user?.createdAt }}</p>
-    <!-- level -->
-  </Card>
+  </section>
 </template>

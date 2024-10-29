@@ -98,7 +98,7 @@ onMounted(async () => {
             <button
               class="border border-gray-400 font-regular text-[12px] px-4 rounded-md py-1"
             >
-              {{ user?.role?.name }}
+              {{ customer.role?.name ? customer.role?.name : 'NA' }}
             </button>
           </Card>
         </div>
@@ -140,7 +140,7 @@ onMounted(async () => {
               d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.414V7a1 1 0 0 0-2 0v5.586l4.707 4.707a1 1 0 1 0 1.414-1.414z"
             ></path>
           </svg>
-          <span class="text-sm">4h</span>
+          <span class="text-sm">{{ timeAgo(event.createdAt) }}</span>
           <svg
             class="h-4 w-4 text-yellow-500"
             fill="currentColor"

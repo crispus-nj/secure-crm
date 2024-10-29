@@ -6,14 +6,15 @@ import Loader from '@/shared/components/Loader.vue'
 import AddProject from './AddProject.vue'
 
 import Button from '@/shared/ui/Button.vue'
-
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import Modal from '@/shared/components/Modal.vue'
 import type { Project } from '@/models/project'
 
 const projects = ref<Project[]>([])
 const loader = ref<boolean>(false)
 const showDialog = ref(false)
+const searchTerm = ref<string>('')
+const sortOrder = ref<string>('Newest')
 
 watch(showDialog, async newValue => {
   if (!newValue) {
@@ -26,7 +27,6 @@ onMounted(async () => {
 })
 
 const handleDialogClose = async () => {
-  console.log('a-a-a-a-a-a--a-a--a')
   showDialog.value = false
   await listProjects()
 }
@@ -35,7 +35,7 @@ const listProjects = async () => {
   loader.value = true
   try {
     const users = await api.get('/projects')
-    projects.value = [...users.data] // Ensure the data structure matches your expected format
+    projects.value = [...users.data]
     loader.value = false
   } catch (error) {
     loader.value = false
@@ -58,6 +58,30 @@ const handleSubmitResult = (result: boolean) => {
     console.error('Failed to add project.')
   }
 }
+
+const filteredProjects = computed(() => {
+  if (searchTerm.value.trim().length > 5) {
+    const filtered = projects.value.filter(project =>
+      project.name.toLowerCase().includes(searchTerm.value.toLowerCase()),
+    )
+    return filtered.length ? filtered : 'Data Not Found'
+  }
+  return projects.value
+})
+
+const sortProjects = () => {
+  if (sortOrder.value === 'Newest') {
+    projects.value.sort(
+      (a, b) =>
+        new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+    )
+  } else {
+    projects.value.sort(
+      (a, b) =>
+        new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
+    )
+  }
+}
 </script>
 
 <template>
@@ -78,6 +102,7 @@ const handleSubmitResult = (result: boolean) => {
             type="text"
             placeholder="Search"
             class="border border-gray-300 rounded-md px-3 py-2 w-full md:w-auto"
+            v-model="searchTerm"
           />
           <select
             class="border border-gray-300 rounded-md px-3 py-2 text-gray-600"
@@ -88,7 +113,7 @@ const handleSubmitResult = (result: boolean) => {
         </div>
       </div>
       <!-- Table Wrapper for Horizontal Scroll -->
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto" v-if="Array.isArray(filteredProjects)">
         <table
           class="w-full bg-white border border-gray-200 rounded-lg min-w-max"
         >
@@ -104,7 +129,7 @@ const handleSubmitResult = (result: boolean) => {
           </thead>
           <tbody>
             <tr
-              v-for="project in projects"
+              v-for="project in filteredProjects"
               :key="project.id"
               class="text-gray-700"
             >
@@ -131,6 +156,9 @@ const handleSubmitResult = (result: boolean) => {
             </tr>
           </tbody>
         </table>
+      </div>
+      <div v-else class="text-center text-gray-500 py-6">
+        {{ filteredProjects }}
       </div>
     </div>
     <div class="flex flex-col justify-center items-center min-h-[50vh]" v-else>

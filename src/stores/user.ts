@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type { IUser } from '@/models/User'
 import api from '@/services/http'
+import { showToast } from '@/services/app-service'
 
 function getUserFromSession(): IUser | null {
   const userData = sessionStorage.getItem('user')
@@ -21,8 +22,9 @@ export const userStore = defineStore('user', {
         this.user = response.data.Payload
         sessionStorage.setItem('user', JSON.stringify(this.user))
         this.loading = false
-      } catch (error: unknown) {
-        console.log(error)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        showToast(error.message, 'error')
         this.loading = false
       }
     },
@@ -33,8 +35,10 @@ export const userStore = defineStore('user', {
         this.user = response.data.Payload
         sessionStorage.setItem('user', JSON.stringify(this.user))
         this.loading = false
-      } catch (error: unknown) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         console.log(error)
+        showToast(error.message, 'error')
         this.loading = false
       }
     },

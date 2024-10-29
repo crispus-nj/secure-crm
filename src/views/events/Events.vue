@@ -3,6 +3,7 @@ import api from '@/services/http'
 import {
   processHttpErrors,
   convertDateToMoreReadable,
+  timeAgo,
 } from '@/services/app-service'
 
 import Loader from '@/shared/components/Loader.vue'
@@ -60,35 +61,6 @@ const handleSubmitResult = (result: boolean) => {
   } else {
     console.error('Failed to add project.')
   }
-}
-
-const timeAgo = (isoString: string) => {
-  // Parse the ISO string into a Date object
-  const date: Date = new Date(isoString)
-
-  // Get the current date and time
-  const now = new Date()
-  const diffTime = now.getTime() - date.getTime() // Difference in milliseconds
-
-  // Calculate time units
-  const seconds = Math.floor(diffTime / 1000)
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
-
-  // Determine the appropriate string based on the time difference
-  let result
-  if (seconds < 60) {
-    result = seconds === 1 ? '1 second ago' : `${seconds} seconds ago`
-  } else if (minutes < 60) {
-    result = minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`
-  } else if (hours < 24) {
-    result = hours === 1 ? '1 hour ago' : `${hours} hours ago`
-  } else {
-    result = days === 1 ? '1 day ago' : `${days} days ago`
-  }
-
-  return result
 }
 </script>
 <template>

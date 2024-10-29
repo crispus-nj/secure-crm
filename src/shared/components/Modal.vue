@@ -7,8 +7,8 @@ const props = defineProps<{
   modalTitle?: string
   state?: boolean
   closable?: boolean
-  backdrop?: modalBackdrop // Adjusted the type to modalBackdrop
-  placement?: modalPlacement // adjust as per ModalOptions type
+  backdrop?: modalBackdrop
+  placement?: modalPlacement
   width?:
     | 'sm'
     | 'md'
