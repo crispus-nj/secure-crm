@@ -62,8 +62,8 @@ npm run lint
 
 ### Login Page
 
-[login page](./public/images/login.png?raw=true)
+![login page](./public/images/login.png?raw=true)
 
 ### Register Page
 
-[Register pages](./public/images/signup.png?raw=true)
+![Register pages](./public/images/signup.png?raw=true)
