@@ -59,3 +59,11 @@ npm run test:e2e
 ```sh
 npm run lint
 ```
+
+### Login Page
+
+[login page](./public/images/login.png?raw=true)
+
+### Register Page
+
+[Register pages](./public/images/signup.png?raw=true)
