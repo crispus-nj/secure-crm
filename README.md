@@ -66,4 +66,28 @@ npm run lint
 
 ### Register Page
 
-![Register pages](./public/images/signup.png?raw=true)
+![Register page](./public/images/signup.png?raw=true)
+
+### Dashboard Page
+
+![Dashboard page](./public/images/dashboard.png?raw=true)
+
+### Roles Page
+
+![Roles page](./public/images/roles.png?raw=true)
+
+### Users Page
+
+![Users page](./public/images/users.png?raw=true)
+
+### Events Page
+
+![Event page](./public/images/events.png?raw=true)
+
+### Add Event Page
+
+![Event page](./public/images/addEvent.png?raw=true)
+
+### Projects Page
+
+![Project page](./public/images/projects.png?raw=true)
